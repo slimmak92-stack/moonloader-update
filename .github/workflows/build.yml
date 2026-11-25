@@ -1,0 +1,29 @@
+name: Build OpenMoonLoader Turbo (Win32)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-win32:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake (Win32)
+        run: cmake -B build -A Win32
+
+      - name: Build Release
+        run: cmake --build build --config Release
+
+      - name: Upload Release Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenMoonLoader-Turbo-Win32
+          path: |
+            build/Release/MoonLoader.asi
+            build/Release/sample_addon.dll
