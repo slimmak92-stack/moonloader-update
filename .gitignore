@@ -1,0 +1,13 @@
+build/
+out/
+.vs/
+*.obj
+*.o
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.idb
+*.tlog
+*.lastbuildstate
+.cache/
