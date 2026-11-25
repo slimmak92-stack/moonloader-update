@@ -29,24 +29,16 @@ void ConfigManager::LoadOrCreate(const std::filesystem::path& iniPath) {
     if (!std::filesystem::exists(iniPath, ec)) {
         FILE* fp = nullptr;
         if (_wfopen_s(&fp, iniPath.c_str(), L"w") == 0 && fp != nullptr) {
-            constexpr const char* kDefaultIni =
-                "[Runtime]
-"
-                "HotReload=true
-"
-                "LoadNativeAddons=true
-"
-                "IsolatedScriptSandboxes=true
-"
-                "FastBytecodeCache=true
-"
-                "DebugConsole=false
-"
-                "StartupDelayMs=0
-"
-                "TickIntervalMs=16
-";
-            std::fwrite(kDefaultIni, 1, std::char_traits<char>::length(kDefaultIni), fp);
+            constexpr const char kDefaultIni[] = R"([Runtime]
+HotReload=true
+LoadNativeAddons=true
+IsolatedScriptSandboxes=true
+FastBytecodeCache=true
+DebugConsole=false
+StartupDelayMs=0
+TickIntervalMs=16
+)";
+            std::fwrite(kDefaultIni, 1, sizeof(kDefaultIni) - 1, fp);
             std::fclose(fp);
         }
     }
